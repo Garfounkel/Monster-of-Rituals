@@ -17,6 +17,6 @@ public class Clock : MonoBehaviour {
 	{
 		clockNeedle.RotateAround (transform.position, Vector3.back, Time.deltaTime * speed);
 		hours =  12 - ((clockNeedle.eulerAngles.z / 30) % 12);
-		Debug.Log ("hour = " + hours);
+		//Debug.Log ("hour = " + hours);
 	}
 }
