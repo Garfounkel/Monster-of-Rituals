@@ -15,6 +15,12 @@ public class TentaclePickUpTrigger : MonoBehaviour {
 
 	void Update(){		
 		if (!Input.GetMouseButton(0) && mouseIsDown){
+			if (fixedJoint.connectedBody != null){
+				IPickUpReact pickUpReactor = fixedJoint.connectedBody.gameObject.GetComponent<IPickUpReact>();
+				if (pickUpReactor != null){
+					pickUpReactor.OnLetGo();
+				}
+			}
 			fixedJoint.connectedBody = null;
 			fixedJoint.enabled = false;
 		}
@@ -26,6 +32,10 @@ public class TentaclePickUpTrigger : MonoBehaviour {
 			fixedJoint.connectedBody = col.attachedRigidbody;
 			fixedJoint.connectedAnchor = Vector2.zero;
 			fixedJoint.enabled = true;
+			IPickUpReact pickUpReactor = col.gameObject.GetComponent<IPickUpReact>();
+			if (pickUpReactor != null){
+				pickUpReactor.OnPickUp();
+			}
 		}
 	}
 }
