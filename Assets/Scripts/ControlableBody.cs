@@ -4,6 +4,7 @@ using System.Collections;
 public class ControlableBody : MonoBehaviour {
 
 	public SpriteRenderer OverHeadSprite;
+	public SpriteRenderer playerSpriteRenderer;
 
 	[SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
 
@@ -61,8 +62,8 @@ public class ControlableBody : MonoBehaviour {
 		m_FacingRight = !m_FacingRight;
 
 		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
+		Vector3 theScale = playerSpriteRenderer.transform.localScale;
 		theScale.x *= -1;
-		transform.localScale = theScale;
+		playerSpriteRenderer.transform.localScale = theScale;
 	}
 }
