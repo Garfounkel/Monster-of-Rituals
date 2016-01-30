@@ -16,6 +16,7 @@ public class FleeFromPlayer : MonoBehaviour {
     void Start () {
         _player = GameObject.Find("Player").transform;
         TriggerDistance += Random.Range(-TriggerDistance * 0.1f, TriggerDistance * 0.2f); //Adding individual differences to the fear zone
+        wallsRect = new Rect(transform.root.Find("BottomLeft").position, transform.root.Find("TopRight").position - transform.root.Find("BottomLeft").position);
     }
 	
 	// Update is called once per frame
@@ -28,7 +29,7 @@ public class FleeFromPlayer : MonoBehaviour {
         var h = tr.y - bl.y;
         var wallsRect = new Rect(bl.x + marginH, bl.y + marginBottom, w - marginH*2, h - marginBottom - marginTop);*/
         /*var*/ //wallsRect = transform.root.gameObject.GetComponent<RectTransform>().rect;
-        /*var*/ wallsRect = new Rect(transform.root.Find("BottomLeft").position, transform.root.Find("TopRight").position - transform.root.Find("BottomLeft").position);
+        /*var*/ //wallsRect = new Rect(transform.root.Find("BottomLeft").position, transform.root.Find("TopRight").position - transform.root.Find("BottomLeft").position);
         //var bl = new Vector2(wallsRect.xMin,wallsRect.yMin);
         var bl = new Vector2(wallsRect.xMin, wallsRect.yMin);
         var tr = new Vector2(wallsRect.xMax, wallsRect.yMax);
