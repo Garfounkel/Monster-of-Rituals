@@ -39,13 +39,13 @@ public class PlayerAngry : MonoBehaviour {
 		}
 	}
 
-	public void MoreAngry()
+	public static void MoreAngry()
 	{
 		if (currentMood != Mood.veryAngry)
 			currentMood++;
 	}
 
-	public void LessAngry()
+	public static void LessAngry()
 	{
 		if (currentMood != Mood.good)
 			currentMood--;
