@@ -5,52 +5,39 @@ public class ControlableBody : MonoBehaviour {
 
 	public SpriteRenderer OverHeadSprite;
 	public SpriteRenderer playerSpriteRenderer;
+    public TentaculeOverlap leftTentaculeOverlap;
+    public TentaculeOverlap rightTentaculeOverlap;
 
-	public float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
+    public float m_MaxSpeed = 10f;
 
-	//private Animator m_Anim;            // Reference to the player's animator component.
 	private Rigidbody2D m_Rigidbody2D;
-	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+	private bool m_FacingRight = true;
 
-	private void Awake()
+	private void Start()
 	{
-		// Setting up references.
-		//m_Anim = GetComponent<Animator>();
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        leftTentaculeOverlap.AddSortingOrder(2);
 	}
 
 
 	private void FixedUpdate()
 	{
-		// Read the inputs.
 		float h = Input.GetAxis("Horizontal");
-		// Pass all parameters to the character control script.
 		Move(h);
 
-		// Set the vertical animation
-		//m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
 	}
 
 
 	public void Move(float move)
 	{
-		//only control the player if grounded or airControl is turned on
-		// The Speed animator parameter is set to the absolute value of the horizontal input.
-		//m_Anim.SetFloat("Speed", Mathf.Abs(move));
-
-		// Move the character
 		m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);
 
-		// If the input is moving the player right and the player is facing left...
 		if (move > 0 && !m_FacingRight)
 		{
-			// ... flip the player.
 			Flip();
 		}
-		// Otherwise if the input is moving the player left and the player is facing right...
 		else if (move < 0 && m_FacingRight)
 		{
-			// ... flip the player.
 			Flip();
 		}
 	}
@@ -58,12 +45,22 @@ public class ControlableBody : MonoBehaviour {
 
 	private void Flip()
 	{
-		// Switch the way the player is labelled as facing.
 		m_FacingRight = !m_FacingRight;
 
-		// Multiply the player's x local scale by -1.
 		Vector3 theScale = playerSpriteRenderer.transform.localScale;
 		theScale.x *= -1;
-		playerSpriteRenderer.transform.localScale = theScale;
+
+	    if (theScale.x < 0)
+	    {
+            leftTentaculeOverlap.AddSortingOrder(2);
+	        rightTentaculeOverlap.AddSortingOrder(-2);
+	    }
+	    else
+	    {
+            leftTentaculeOverlap.AddSortingOrder(-2);
+            rightTentaculeOverlap.AddSortingOrder(2);
+        }
+
+        playerSpriteRenderer.transform.localScale = theScale;
 	}
 }
