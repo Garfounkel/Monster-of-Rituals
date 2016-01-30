@@ -89,12 +89,12 @@ public class PlayerAngry : MonoBehaviour {
         Vector3 prevPos;
         while (true)
         {
-            prevPos = playerRenderer.transform.position;
-            playerRenderer.transform.position += new Vector3(power * RandomDir(), power * RandomDir());
+            prevPos = playerRenderer.transform.localPosition;
+            playerRenderer.transform.localPosition += new Vector3(power * RandomDir(), power * RandomDir());
             yield return new WaitForSeconds(speed);
-            playerRenderer.transform.position -= new Vector3(power * RandomDir(), power * RandomDir());
+            playerRenderer.transform.localPosition -= new Vector3(power * RandomDir(), power * RandomDir());
             yield return new WaitForSeconds(speed);
-            playerRenderer.transform.position = prevPos;
+            playerRenderer.transform.localPosition = prevPos;
         }
     }
 
