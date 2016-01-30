@@ -5,9 +5,11 @@ public class TentaclePickUpTrigger : MonoBehaviour {
 
 	public FixedJoint2D fixedJoint;
 
+	TentacleTipController controller;
 	bool mouseIsDown;
 
 	void Start(){
+		controller = GetComponent<TentacleTipController>();
 		fixedJoint.enabled = false;
 	}
 
@@ -20,7 +22,7 @@ public class TentaclePickUpTrigger : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D(Collider2D col){
-		if (mouseIsDown && col.attachedRigidbody != null && fixedJoint.connectedBody == null && col.gameObject.tag != "Player"){
+		if (mouseIsDown && controller.trackMouse && col.attachedRigidbody != null && fixedJoint.connectedBody == null && col.gameObject.tag != "Player"){
 			fixedJoint.connectedBody = col.attachedRigidbody;
 			fixedJoint.connectedAnchor = Vector2.zero;
 			fixedJoint.enabled = true;
