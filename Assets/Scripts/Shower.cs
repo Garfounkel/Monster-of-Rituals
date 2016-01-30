@@ -7,6 +7,7 @@ public class Shower : MonoBehaviour
     public bool On = true;
     public Vector2 Force = Vector2.down;
     public float TriggerDistance = 6;
+    public float JitterRate = 4;
     private Rigidbody2D _rb;
     private TentacleTipController _ttc;
     private ParticleSystem _ps;
@@ -14,20 +15,19 @@ public class Shower : MonoBehaviour
     private Transform _player;
     private AudioSource _showerSound;
     private Transform _mount;
-    public float _soundStart = 0.15f;
-    public float _soundLoop = 5;
-    public float _soundEnd = 5.5f;
-    public float JitterRate = 10;
+    private float _soundStart = 0.15f;
+    private float _soundLoopStart = 0.5f;
+    private float _soundLoopEnd = 5;
+    private float _soundEnd = 5.5f;
 
     void Start ()
 	{
 	    _rb = GetComponent<Rigidbody2D>();
         _ttc = GetComponent<TentacleTipController>();
         _ps = GetComponentInChildren<ParticleSystem>();
-        _player = GameObject.Find("Player").transform;
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
         _mount = transform.root.Find("Mount");
         _showerSound = GetComponent<AudioSource>();
-        //_showerSound.Play();
     }
 
     private void Update()
@@ -43,21 +43,17 @@ public class Shower : MonoBehaviour
             {
                 _ps.Play();
                 _showerSound.Play();
-                _showerSound.time = 0.15f;
-                //_showerSound.mute = false;
+                _showerSound.time = _soundStart;
                 _emitting = true;
             }
-            else if (_showerSound.time > _soundLoop) _showerSound.time = _soundStart;
+            else if (_showerSound.time > _soundLoopEnd) _showerSound.time = _soundLoopStart;
         }
         else
         {
             _ttc.enabled = true;
-            //_rb.MovePosition(new Vector2(transform.parent.position.x-0.5f, Mathf.Min(transform.position.y+0.5f,transform.parent.position.y+4)));
-            //_rb.MoveRotation(180);
             if (_emitting)
             {
                 _ps.Stop();
-                //_showerSound.mute = true;
                 _showerSound.time = _soundEnd;
                 _emitting = false;
             }
