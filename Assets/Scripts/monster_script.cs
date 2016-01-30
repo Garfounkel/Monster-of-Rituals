@@ -28,7 +28,7 @@ public class monster_script : MonoBehaviour {
             if (_localrigid.velocity.x < MaxVelocity) _localrigid.AddForce(new Vector2((_movingRight ? 1 : -1) * Acceleration, 0));
         }
         
-        if (transform.position.y < -8 || Mathf.Abs(transform.position.x) > 12) Destroy(gameObject);
+        //if (transform.position.y < -8 || Mathf.Abs(transform.position.x) > 12) Destroy(gameObject);
 
 	}
    /* void OnTriggerEnter2D(Collider2D _other)
