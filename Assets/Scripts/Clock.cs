@@ -14,6 +14,7 @@ public class Clock : MonoBehaviour {
     public bool lunchEaten;
 
     public Sprite coffeeClue;
+    public Sprite showerClue;
 
     public float timeBeforeClue;
     [Tooltip("Over Head Message Duration")]public float overHeadMessageDuration;
@@ -29,6 +30,9 @@ public class Clock : MonoBehaviour {
     private bool coffeeTimePassedOnlyOnce;
     private bool coffeeClueOnlyOnce;
     private bool coffeeDrinkedInTimeOnlyOnce;
+    private bool showerTimePassedOnlyOnce;
+    private bool showerClueOnlyOnce;
+    private bool showerTookInTimeOnlyOnce;
 
 	void Awake(){
 		instance = this;
@@ -47,7 +51,7 @@ public class Clock : MonoBehaviour {
 		//Debug.Log ("hour = " + hours);
 
 
-
+        // COFFEE
 	    if (CurrentHour > coffeeTime && !coffeeDrinked && !coffeeTimePassedOnlyOnce)
 	    {
 	        coffeeTimePassedOnlyOnce = true;
@@ -67,7 +71,29 @@ public class Clock : MonoBehaviour {
             Debug.Log("Coffee drinked in time, I'm less angry =)");
 	        PlayerAngry.LessAngry();
 	    }
-	}
+
+
+        // SHOWER
+        if (CurrentHour > showerTime && !showerTook && !showerTimePassedOnlyOnce)
+        {
+            showerTimePassedOnlyOnce = true;
+            Debug.Log("Time for shower has passed and I haven't even took it, I'm pissed !!");
+            PlayerAngry.MoreAngry();
+        }
+
+        if (CurrentHour > showerTime - timeBeforeClue && !showerTook && !showerClueOnlyOnce)
+        {
+            showerClueOnlyOnce = true;
+            StartCoroutine(SetOverHeadImage(showerClue));
+        }
+
+        if (CurrentHour < showerTime && showerTook && !showerTookInTimeOnlyOnce)
+        {
+            showerTookInTimeOnlyOnce = true;
+            Debug.Log("Shower has been taken in time, I'm less angry =)");
+            PlayerAngry.LessAngry();
+        }
+    }
 
 	public static void ReportNeedComplete(NeedType needType){
 		if (needType == NeedType.Coffee){
