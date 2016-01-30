@@ -15,6 +15,8 @@ public class PlayerMouth : MonoBehaviour {
 		if (other.tag == "Coffe") {
 			if (Clock.CurrentHour < clock.coffeTime) {
 				// DO COFFE STUFF
+			} else {
+				// TURN ANGRY 
 			}
 		}
 	}

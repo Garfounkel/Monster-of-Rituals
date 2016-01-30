@@ -6,7 +6,7 @@ public class ControlableBody : MonoBehaviour {
 	public SpriteRenderer OverHeadSprite;
 	public SpriteRenderer playerSpriteRenderer;
 
-	[SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
+	public float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
 
 	//private Animator m_Anim;            // Reference to the player's animator component.
 	private Rigidbody2D m_Rigidbody2D;
