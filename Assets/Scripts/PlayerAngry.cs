@@ -54,20 +54,27 @@ public class PlayerAngry : MonoBehaviour {
 	public void UpdateMood ()
 	{
         Debug.Log("Changing mood for " + currentMood);
-		switch (currentMood) {
-		case Mood.good:
-			NewMood (Mood.good, goodMoodSprite, goodMoodSpeed);
-			break;
-		case Mood.neutral:
-			NewMood (Mood.neutral, neutralMoodSprite, neutralMoodSpeed);
-			break;
-		case Mood.angry:
-			NewMood (Mood.angry, angryMoodSprite, angryMoodSpeed);
-			break;
-		case Mood.veryAngry:
-			NewMood (Mood.veryAngry, veryAngryMoodSprite, veryAngryMoodSpeed);
-			break;
-		}
+	    switch (currentMood)
+	    {
+	        case Mood.good:
+	            NewMood(Mood.good, goodMoodSprite, goodMoodSpeed);
+                StopAllCoroutines();
+                break;
+	        case Mood.neutral:
+	            NewMood(Mood.neutral, neutralMoodSprite, neutralMoodSpeed);
+                StopAllCoroutines();
+                break;
+	        case Mood.angry:
+	            NewMood(Mood.angry, angryMoodSprite, angryMoodSpeed);
+                StopAllCoroutines();
+                StartCoroutine(Jitter(0.05f, 0.1f));
+	            break;
+	        case Mood.veryAngry:
+	            NewMood(Mood.veryAngry, veryAngryMoodSprite, veryAngryMoodSpeed);
+                StopAllCoroutines();
+                StartCoroutine(Jitter(0.1f, 0.1f));
+	            break;
+	    }
 	}
 
 	private void NewMood(Mood mood, Sprite sprite, float speed)
@@ -76,6 +83,28 @@ public class PlayerAngry : MonoBehaviour {
 		playerRenderer.sprite = sprite;
 		cb.m_MaxSpeed = speed;
 	}
+
+    private IEnumerator Jitter(float power, float speed)
+    {
+        Vector3 prevPos;
+        while (true)
+        {
+            prevPos = playerRenderer.transform.localPosition;
+            playerRenderer.transform.localPosition += new Vector3(power * RandomDir(), power * RandomDir());
+            yield return new WaitForSeconds(speed);
+            playerRenderer.transform.localPosition -= new Vector3(power * RandomDir(), power * RandomDir());
+            yield return new WaitForSeconds(speed);
+            playerRenderer.transform.localPosition = prevPos;
+        }
+    }
+
+    private float RandomDir()
+    {
+        if (Random.value < 0.5f)
+            return -1;
+        else
+            return 1;
+    }
 
 	public enum Mood {
 		good,
