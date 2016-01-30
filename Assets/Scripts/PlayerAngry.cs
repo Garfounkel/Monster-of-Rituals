@@ -55,25 +55,24 @@ public class PlayerAngry : MonoBehaviour {
 	{
 		switch (currentMood) {
 		case Mood.good:
-			NewMood (Mood.good, goodMoodSprite, Color.green, goodMoodSpeed);
+			NewMood (Mood.good, goodMoodSprite, goodMoodSpeed);
 			break;
 		case Mood.neutral:
-			NewMood (Mood.neutral, neutralMoodSprite, Color.grey, neutralMoodSpeed);
+			NewMood (Mood.neutral, neutralMoodSprite, neutralMoodSpeed);
 			break;
 		case Mood.angry:
-			NewMood (Mood.angry, angryMoodSprite, Color.yellow, angryMoodSpeed);
+			NewMood (Mood.angry, angryMoodSprite, angryMoodSpeed);
 			break;
 		case Mood.veryAngry:
-			NewMood (Mood.veryAngry, veryAngryMoodSprite, Color.red, veryAngryMoodSpeed);
+			NewMood (Mood.veryAngry, veryAngryMoodSprite, veryAngryMoodSpeed);
 			break;
 		}
 	}
 
-	private void NewMood(Mood mood, Sprite sprite, Color color, float speed)
+	private void NewMood(Mood mood, Sprite sprite, float speed)
 	{
 		previousMood = mood;
 		playerRenderer.sprite = sprite;
-		playerRenderer.color = color;
 		cb.m_MaxSpeed = speed;
 	}
 
