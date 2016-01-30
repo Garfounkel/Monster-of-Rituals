@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour {
 
+	public static Clock instance;
+
 	public float coffeeTime;
     public float showerTime;
     public float lunchTime;
@@ -27,6 +29,10 @@ public class Clock : MonoBehaviour {
     private bool coffeeTimePassedOnlyOnce;
     private bool coffeeClueOnlyOnce;
     private bool coffeeDrinkedInTimeOnlyOnce;
+
+	void Awake(){
+		instance = this;
+	}
 
     void Start()
 	{
@@ -61,6 +67,18 @@ public class Clock : MonoBehaviour {
             Debug.Log("Coffee drinked in time, I'm less angry =)");
 	        PlayerAngry.LessAngry();
 	    }
+	}
+
+	public static void ReportNeedComplete(NeedType needType){
+		if (needType == NeedType.Coffee){
+			instance.coffeeDrinked = true;
+		}
+		else if (needType == NeedType.Shower){
+			instance.showerTook = true;
+		}
+		else if (needType == NeedType.Lunch){
+			instance.lunchEaten = true;
+		}
 	}
 
     private IEnumerator SetOverHeadImage(Sprite image)

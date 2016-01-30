@@ -7,10 +7,12 @@ public class Coffee : InteractableNeed {
 
 	private bool firstCollision = true;
 
-	protected override void OnNeedPerformed(){
-		if (!slurpSound.isPlaying){
-			slurpSound.Play();
-		}
+	protected override void OnNeedComplete(){
+		base.OnNeedComplete();
+	}
+
+	protected override void PerformingNeedEffect(){		
+		slurpSound.Play();
 	}
 
 	void OnCollisionEnter2D(Collision2D col){
