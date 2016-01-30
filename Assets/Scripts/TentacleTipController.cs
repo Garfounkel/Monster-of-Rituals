@@ -16,20 +16,27 @@ public class TentacleTipController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 target; 
+		bool moveTentacle = true;
+		Vector3 target = Vector3.zero; 
 		if (trackMouse){
 			Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			target = new Vector3(mouseWorldPosition.x, mouseWorldPosition.y, 0f);
 		}
 		else{
-			target = customTargetTransform.position;
+			if (customTargetTransform != null){
+				target = customTargetTransform.position;
+			}
+			else{
+				moveTentacle = false;
+			}
 		}
+		if (moveTentacle){
 			float currentDistance = Vector3.Distance(anchorTransform.position, target);
 			if (currentDistance > maxDistanceFromAnchor){
 				Vector3 normalizedDirectionVector = Vector3.Normalize(target - anchorTransform.position);
 				target = anchorTransform.position + (normalizedDirectionVector * maxDistanceFromAnchor);
 			}
 			localRigid.MovePosition(target);
-
+		}
 	}
 }
