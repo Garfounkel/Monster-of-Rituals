@@ -3,30 +3,66 @@ using System.Collections;
 
 public class ControlableBody : MonoBehaviour {
 
-	public float speed;
-	public float maxVelocity;
+	public SpriteRenderer OverHeadSprite;
 
-	private Rigidbody2D rb;
-	private int direction;
+	[SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
 
-	void Start () 
+	//private Animator m_Anim;            // Reference to the player's animator component.
+	private Rigidbody2D m_Rigidbody2D;
+	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+
+	private void Awake()
 	{
-		rb = GetComponent<Rigidbody2D> ();
+		// Setting up references.
+		//m_Anim = GetComponent<Animator>();
+		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 	}
-	
-	void Update () 
-	{
-		if (Input.GetAxis ("Horizontal") > 0) {
-			Debug.Log ("right");
-			direction = 1;
-		} else if (Input.GetAxis ("Horizontal") < 0) {
-			Debug.Log ("left");
-			direction = -1;
-		} else {
-			direction = 0;
-		}
 
-		if (rb.velocity.magnitude < maxVelocity)
-			rb.AddForce (transform.right * direction * speed);
+
+	private void FixedUpdate()
+	{
+		// Read the inputs.
+		float h = Input.GetAxis("Horizontal");
+		// Pass all parameters to the character control script.
+		Move(h);
+
+		// Set the vertical animation
+		//m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+	}
+
+
+	public void Move(float move)
+	{
+		//only control the player if grounded or airControl is turned on
+		// The Speed animator parameter is set to the absolute value of the horizontal input.
+		//m_Anim.SetFloat("Speed", Mathf.Abs(move));
+
+		// Move the character
+		m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);
+
+		// If the input is moving the player right and the player is facing left...
+		if (move > 0 && !m_FacingRight)
+		{
+			// ... flip the player.
+			Flip();
+		}
+		// Otherwise if the input is moving the player left and the player is facing right...
+		else if (move < 0 && m_FacingRight)
+		{
+			// ... flip the player.
+			Flip();
+		}
+	}
+
+
+	private void Flip()
+	{
+		// Switch the way the player is labelled as facing.
+		m_FacingRight = !m_FacingRight;
+
+		// Multiply the player's x local scale by -1.
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
 	}
 }
