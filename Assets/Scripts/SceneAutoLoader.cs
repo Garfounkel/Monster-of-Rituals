@@ -6,6 +6,7 @@ public class SceneAutoLoader : MonoBehaviour {
 
 	public static SceneAutoLoader instance;
 	public string[] otherScenes;
+	public GameObject effectBankPrefab;
 
 	void Start(){
 		if (instance != null){
@@ -20,6 +21,7 @@ public class SceneAutoLoader : MonoBehaviour {
 					SceneManager.LoadScene(otherScenes[i], LoadSceneMode.Additive);
 				}
 			}
+			Instantiate(effectBankPrefab);
 		}
 	}
 }
