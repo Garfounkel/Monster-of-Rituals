@@ -3,20 +3,23 @@ using System.Collections;
 
 public class Clock : MonoBehaviour {
 
+	public float coffeTime;
+
 	public Transform clockNeedle;
 	public float speed;
 
-	private float hours;
+	public static float CurrentHour;
+
 
 	void Start()
 	{
-		hours = 0;
+		CurrentHour = 0;
 	}
 
 	void Update () 
 	{
 		clockNeedle.RotateAround (transform.position, Vector3.back, Time.deltaTime * speed);
-		hours =  12 - ((clockNeedle.eulerAngles.z / 30) % 12);
+		CurrentHour =  12 - ((clockNeedle.eulerAngles.z / 30) % 12);
 		//Debug.Log ("hour = " + hours);
 	}
 }
