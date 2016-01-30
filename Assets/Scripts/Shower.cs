@@ -8,6 +8,7 @@ public class Shower : MonoBehaviour
     public Vector2 Force = Vector2.down;
     public float TriggerDistance = 6;
     public float JitterRate = 4;
+    public float JitterStrength = 0.01f;
     private Rigidbody2D _rb;
     private TentacleTipController _ttc;
     private ParticleSystem _ps;
@@ -35,10 +36,13 @@ public class Shower : MonoBehaviour
         if (On)
         {
             _rb.AddRelativeForce(Force);
-            if (Random.Range(0, JitterRate) > 1)
+            /*if (Random.Range(0, JitterRate) > 1)
                 _ttc.enabled = false;
             else
-                _ttc.enabled = true;
+                _ttc.enabled = true;*/
+            //if (Random.Range(0, JitterRate) > 1) _rb.AddRelativeForce(Quaternion.Euler(0, 0, Random.Range(0, 360)) * Vector3.up * JitterStrength, ForceMode2D.Impulse);
+            if (Random.Range(0, JitterRate) < 1) _rb.AddRelativeForce(new Vector2(Random.Range(-1 , 1), Random.Range(-1, 1)).normalized * JitterStrength, ForceMode2D.Impulse);
+            _ttc.enabled = false;
             if (!_emitting)
             {
                 _ps.Play();
