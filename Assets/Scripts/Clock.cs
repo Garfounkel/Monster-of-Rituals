@@ -12,6 +12,7 @@ public class Clock : MonoBehaviour {
     public bool coffeeDrinked;
     public bool showerTook;
     public bool lunchEaten;
+    public bool wiskyDrinked;
 
     public Sprite coffeeClue;
     public Sprite showerClue;
@@ -20,6 +21,7 @@ public class Clock : MonoBehaviour {
     [Tooltip("Over Head Message Duration")]public float overHeadMessageDuration;
 
     public Transform clockNeedle;
+    public Transform mid;
 	public float speed;
 
 	public static float CurrentHour;
@@ -34,7 +36,7 @@ public class Clock : MonoBehaviour {
     private bool showerClueOnlyOnce;
     private bool showerTookInTimeOnlyOnce;
 
-	void Awake(){
+    void Awake(){
 		instance = this;
 	}
 
@@ -46,7 +48,7 @@ public class Clock : MonoBehaviour {
 
 	void Update () 
 	{
-		clockNeedle.RotateAround (transform.position, Vector3.back, Time.deltaTime * speed);
+		clockNeedle.RotateAround (mid.position, Vector3.back, Time.deltaTime * speed);
 		CurrentHour =  12 - ((clockNeedle.eulerAngles.z / 30) % 12);
 		//Debug.Log ("hour = " + hours);
 
