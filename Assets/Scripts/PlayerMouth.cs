@@ -13,17 +13,15 @@ public class PlayerMouth : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Coffee") {
-			if (Clock.CurrentHour < clock.coffeeTime) {
-				other.GetComponent<InteractableNeed>().PerformNeed();
-			}
+			Debug.Log("STARTED DRINKING");
+			other.GetComponent<InteractableNeed>().PerformNeed();
 		}
 	}
 
-	private void OnTriggerExit2D(Collider2D other){
+	private void OnTriggerExit2D(Collider2D other){		
 		if (other.tag == "Coffee") {
-			if (Clock.CurrentHour < clock.coffeeTime) {
-				other.GetComponent<InteractableNeed>().StopPerformingNeed();
-			}
+			Debug.Log("STOPPED DRINKING");
+			other.GetComponent<InteractableNeed>().StopPerformingNeed();
 		}
 
 	}

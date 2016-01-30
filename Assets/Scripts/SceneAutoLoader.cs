@@ -14,7 +14,6 @@ public class SceneAutoLoader : MonoBehaviour {
 		}
 		else{
 			instance = this;
-			Debug.Log("SETTING INSTANCE!");
 		
 			for (int i = 0; i < otherScenes.Length; i++){
 				if (SceneManager.GetActiveScene().name != otherScenes[i]){
