@@ -20,8 +20,7 @@ public class TentaclePickUpTrigger : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D(Collider2D col){
-		if (mouseIsDown && col.attachedRigidbody != null && fixedJoint.connectedBody == null){
-			Debug.Log("TRYING TO PICK UP");
+		if (mouseIsDown && col.attachedRigidbody != null && fixedJoint.connectedBody == null && col.gameObject.tag != "Player"){
 			fixedJoint.connectedBody = col.attachedRigidbody;
 			fixedJoint.connectedAnchor = Vector2.zero;
 			fixedJoint.enabled = true;

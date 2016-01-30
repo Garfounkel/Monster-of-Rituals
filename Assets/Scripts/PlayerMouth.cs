@@ -14,10 +14,17 @@ public class PlayerMouth : MonoBehaviour {
 	{
 		if (other.tag == "Coffee") {
 			if (Clock.CurrentHour < clock.coffeeTime) {
-				// DO COFFE STUFF
-			} else {
-				// TURN ANGRY 
+				other.GetComponent<InteractableNeed>().PerformNeed();
 			}
 		}
+	}
+
+	private void OnTriggerExit2D(Collider2D other){
+		if (other.tag == "Coffee") {
+			if (Clock.CurrentHour < clock.coffeeTime) {
+				other.GetComponent<InteractableNeed>().StopPerformingNeed();
+			}
+		}
+
 	}
 }
