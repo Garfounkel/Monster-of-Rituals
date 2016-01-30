@@ -12,8 +12,8 @@ public class PlayerMouth : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "Coffe") {
-			if (Clock.CurrentHour < clock.coffeTime) {
+		if (other.tag == "Coffee") {
+			if (Clock.CurrentHour < clock.coffeeTime) {
 				// DO COFFE STUFF
 			} else {
 				// TURN ANGRY 

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Clock : MonoBehaviour {
 
-	public float coffeTime;
+	public float coffeeTime;
 
 	public Transform clockNeedle;
 	public float speed;

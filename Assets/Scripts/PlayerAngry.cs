@@ -27,16 +27,28 @@ public class PlayerAngry : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.B) && currentMood != Mood.veryAngry) {
-			currentMood++;
+		if (Input.GetKeyDown (KeyCode.B)) {
+			MoreAngry ();
 		}
-		if (Input.GetKeyDown (KeyCode.N) && currentMood != Mood.good) {
-			currentMood--;
+		if (Input.GetKeyDown (KeyCode.N)) {
+			LessAngry ();
 		}
 
 		if (previousMood != currentMood) {
 			UpdateMood ();
 		}
+	}
+
+	public void MoreAngry()
+	{
+		if (currentMood != Mood.veryAngry)
+			currentMood++;
+	}
+
+	public void LessAngry()
+	{
+		if (currentMood != Mood.good)
+			currentMood--;
 	}
 
 	public void UpdateMood ()
