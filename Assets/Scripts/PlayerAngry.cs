@@ -53,6 +53,7 @@ public class PlayerAngry : MonoBehaviour {
 
 	public void UpdateMood ()
 	{
+        Debug.Log("Changing mood for " + currentMood);
 		switch (currentMood) {
 		case Mood.good:
 			NewMood (Mood.good, goodMoodSprite, goodMoodSpeed);

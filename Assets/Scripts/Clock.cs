@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Clock : MonoBehaviour {
 
@@ -10,16 +11,26 @@ public class Clock : MonoBehaviour {
     public bool showerTook;
     public bool lunchEaten;
 
-    public float timeBeforeClue;
+    public Sprite coffeeClue;
 
-	public Transform clockNeedle;
+    public float timeBeforeClue;
+    [Tooltip("Over Head Message Duration")]public float overHeadMessageDuration;
+
+    public Transform clockNeedle;
 	public float speed;
 
 	public static float CurrentHour;
 
 
-	void Start()
+    private ControlableBody playerCB;
+
+    private bool coffeeTimePassedOnlyOnce;
+    private bool coffeeClueOnlyOnce;
+    private bool coffeeDrinkedInTimeOnlyOnce;
+
+    void Start()
 	{
+	    playerCB = FindObjectOfType<ControlableBody>();
 		CurrentHour = 0;
 	}
 
@@ -29,17 +40,36 @@ public class Clock : MonoBehaviour {
 		CurrentHour =  12 - ((clockNeedle.eulerAngles.z / 30) % 12);
 		//Debug.Log ("hour = " + hours);
 
-	    if (CurrentHour > coffeeTime && !coffeeDrinked)
+
+
+	    if (CurrentHour > coffeeTime && !coffeeDrinked && !coffeeTimePassedOnlyOnce)
 	    {
-	        //Debug.Log("Time for coffee has passed and I haven't even drinked one, I'm pissed !!");
+	        coffeeTimePassedOnlyOnce = true;
+            Debug.Log("Time for coffee has passed and I haven't even drinked one, I'm pissed !!");
             PlayerAngry.MoreAngry();
 	    }
 
-	    if (CurrentHour > coffeeTime - timeBeforeClue && !coffeeDrinked)
+	    if (CurrentHour > coffeeTime - timeBeforeClue && !coffeeDrinked && !coffeeClueOnlyOnce)
 	    {
-	        
+	        coffeeClueOnlyOnce = true;
+	        StartCoroutine(SetOverHeadImage(coffeeClue));
+	    }
+
+	    if (CurrentHour < coffeeTime && coffeeDrinked && !coffeeDrinkedInTimeOnlyOnce)
+	    {
+	        coffeeDrinkedInTimeOnlyOnce = true;
+            Debug.Log("Coffee drinked in time, I'm less angry =)");
+	        PlayerAngry.LessAngry();
 	    }
 	}
+
+    private IEnumerator SetOverHeadImage(Sprite image)
+    {
+        Sprite previousImage = playerCB.OverHeadSprite.sprite;
+        playerCB.OverHeadSprite.sprite = image;
+        yield return new WaitForSeconds(overHeadMessageDuration);
+        playerCB.OverHeadSprite.sprite = previousImage;
+    }
 }
 
 public enum NeedType

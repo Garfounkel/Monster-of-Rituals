@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class TentaculeOverlap : MonoBehaviour
 {
 
     private SpriteRenderer[] sprites;
 
-	void Start ()
+	void Awake ()
 	{
 	    sprites = GetComponentsInChildren<SpriteRenderer>();
 	}
