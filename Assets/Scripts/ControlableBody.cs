@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ControlableBody : MonoBehaviour {
 
+	public static ControlableBody instance;
+
 	public SpriteRenderer OverHeadSprite;
 	public SpriteRenderer playerSpriteRenderer;
     public TentaculeOverlap leftTentaculeOverlap;
@@ -15,6 +17,12 @@ public class ControlableBody : MonoBehaviour {
 
 	private void Start()
 	{
+		if (instance != null){
+			Destroy(gameObject);
+		}
+		else{
+			instance = this;
+		}
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
         leftTentaculeOverlap.AddSortingOrder(2);
 	}

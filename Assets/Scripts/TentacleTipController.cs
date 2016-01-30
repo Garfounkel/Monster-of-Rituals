@@ -32,7 +32,6 @@ public class TentacleTipController : MonoBehaviour {
 		}
 		if (moveTentacle){
 			float currentDistance = Vector3.Distance(anchorTransform.position, target);
-			Debug.Log("CURRENT DISTANCE " + currentDistance);
 			if (currentDistance > maxDistanceFromAnchor){
 				Vector3 normalizedDirectionVector = Vector3.Normalize(target - anchorTransform.position);
 				target = anchorTransform.position + (normalizedDirectionVector * maxDistanceFromAnchor);
