@@ -5,17 +5,22 @@ public class Clock : MonoBehaviour {
 
 	public static Clock instance;
 
+    public bool useClue;
+
 	public float coffeeTime;
     public float showerTime;
     public float lunchTime;
+    public float whiskyTime;
 
     public bool coffeeDrinked;
     public bool showerTook;
     public bool lunchEaten;
-    public bool wiskyDrinked;
+    public bool whiskyDrinked;
 
     public Sprite coffeeClue;
     public Sprite showerClue;
+    public Sprite lunchClue;
+    public Sprite whiskyClue;
 
     public float timeBeforeClue;
     [Tooltip("Over Head Message Duration")]public float overHeadMessageDuration;
@@ -35,10 +40,13 @@ public class Clock : MonoBehaviour {
     private bool showerTimePassedOnlyOnce;
     private bool showerClueOnlyOnce;
     private bool showerTookInTimeOnlyOnce;
+    private bool whiskyTimePassedOnlyOnce;
+    private bool whiskyClueOnlyOnce;
+    private bool whiskyTookInTimeOnlyOnce;
 
     void Awake(){
-		instance = this;
-	}
+        instance = this;
+    }
 
     void Start()
 	{
@@ -61,7 +69,7 @@ public class Clock : MonoBehaviour {
             PlayerAngry.MoreAngry();
 	    }
 
-	    if (CurrentHour > coffeeTime - timeBeforeClue && !coffeeDrinked && !coffeeClueOnlyOnce)
+	    if (useClue && CurrentHour > coffeeTime - timeBeforeClue && !coffeeDrinked && !coffeeClueOnlyOnce)
 	    {
 	        coffeeClueOnlyOnce = true;
 	        StartCoroutine(SetOverHeadImage(coffeeClue));
@@ -83,7 +91,7 @@ public class Clock : MonoBehaviour {
             PlayerAngry.MoreAngry();
         }
 
-        if (CurrentHour > showerTime - timeBeforeClue && !showerTook && !showerClueOnlyOnce)
+        if (useClue && CurrentHour > showerTime - timeBeforeClue && !showerTook && !showerClueOnlyOnce)
         {
             showerClueOnlyOnce = true;
             StartCoroutine(SetOverHeadImage(showerClue));
@@ -93,6 +101,28 @@ public class Clock : MonoBehaviour {
         {
             showerTookInTimeOnlyOnce = true;
             Debug.Log("Shower has been taken in time, I'm less angry =)");
+            PlayerAngry.LessAngry();
+        }
+
+
+        // Whisky
+        if (CurrentHour > whiskyTime && !whiskyDrinked && !whiskyTimePassedOnlyOnce)
+        {
+            whiskyTimePassedOnlyOnce = true;
+            Debug.Log("Time for whisky has passed and I haven't even took it, I'm pissed !!");
+            PlayerAngry.MoreAngry();
+        }
+
+        if (useClue && CurrentHour > whiskyTime - timeBeforeClue && !whiskyDrinked && !whiskyClueOnlyOnce)
+        {
+            whiskyClueOnlyOnce = true;
+            StartCoroutine(SetOverHeadImage(whiskyClue));
+        }
+
+        if (CurrentHour < whiskyTime && whiskyDrinked && !whiskyTookInTimeOnlyOnce)
+        {
+            whiskyTookInTimeOnlyOnce = true;
+            Debug.Log("whisky has been taken before going to bed, I'm less angry =)");
             PlayerAngry.LessAngry();
         }
     }
@@ -107,6 +137,10 @@ public class Clock : MonoBehaviour {
 		else if (needType == NeedType.Lunch){
 			instance.lunchEaten = true;
 		}
+        else if (needType == NeedType.whisky)
+        {
+            instance.whiskyDrinked = true;
+        }
 	}
 
     private IEnumerator SetOverHeadImage(Sprite image)
@@ -123,5 +157,6 @@ public enum NeedType
     Coffee,
     Shower,
     Lunch,
-    Newspaper
+    Newspaper,
+    whisky
 }

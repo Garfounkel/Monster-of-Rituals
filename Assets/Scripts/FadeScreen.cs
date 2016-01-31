@@ -3,32 +3,40 @@ using System.Collections;
 
 public class FadeScreen : MonoBehaviour {
 
+    public float speed;
+
     private void Start()
     {
-        StartCoroutine(FadeOut(0.1f));
+        /*
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        Color color = renderer.color;
+        color.a = 255;
+        renderer.color = color;
+        */
+        StartCoroutine(FadeIn());
     }
 
-    private IEnumerator FadeIn(float coef)
+    public IEnumerator FadeIn()
     {
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
 
-        while (renderer.color.a != 0)
+        while (renderer.color.a > 0)
         {
             Color color = renderer.color;
-            color.a -= coef * Time.deltaTime;
+            color.a -= speed * Time.deltaTime;
             renderer.color = color;
             yield return null;
         }
     }
 
-    private IEnumerator FadeOut(float coef)
+    public IEnumerator FadeOut()
     {
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
 
-        while (renderer.color.a != 255)
+        while (renderer.color.a < 1)
         {
             Color color = renderer.color;
-            color.a += coef * Time.deltaTime;
+            color.a += speed * Time.deltaTime;
             renderer.color = color;
             yield return null;
         }

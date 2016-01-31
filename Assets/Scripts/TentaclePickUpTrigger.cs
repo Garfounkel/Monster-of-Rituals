@@ -20,6 +20,7 @@ public class TentaclePickUpTrigger : MonoBehaviour {
 				if (pickUpReactor != null){
 					pickUpReactor.OnLetGo();
 				}
+				fixedJoint.connectedBody.velocity = Vector3.ClampMagnitude(fixedJoint.connectedBody.velocity, 19f);
 			}
 			fixedJoint.connectedBody = null;
 			fixedJoint.enabled = false;
@@ -32,7 +33,7 @@ public class TentaclePickUpTrigger : MonoBehaviour {
 			fixedJoint.connectedBody = col.attachedRigidbody;
 			fixedJoint.connectedAnchor = Vector2.zero;
 			fixedJoint.enabled = true;
-			IPickUpReact pickUpReactor = col.gameObject.GetComponent<IPickUpReact>();
+			IPickUpReact pickUpReactor = col.attachedRigidbody.gameObject.GetComponent<IPickUpReact>();
 			if (pickUpReactor != null){
 				pickUpReactor.OnPickUp();
 			}
