@@ -11,6 +11,7 @@ public class ControlableBody : MonoBehaviour {
     public TentaculeOverlap rightTentaculeOverlap;
 
     public float m_MaxSpeed = 10f;
+	public AudioSource ahhSource;
 
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;
@@ -35,6 +36,10 @@ public class ControlableBody : MonoBehaviour {
 
 	}
 
+
+	public void OnNeedFilled(){
+		ahhSource.Play();
+	}
 
 	public void Move(float move)
 	{

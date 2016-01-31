@@ -5,7 +5,7 @@ public class FadeScreen : MonoBehaviour {
 
     public float speed;
 
-    private void Start()
+    private void Awake()
     {
         /*
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
@@ -13,6 +13,11 @@ public class FadeScreen : MonoBehaviour {
         color.a = 255;
         renderer.color = color;
         */
+		SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+		renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1f); 
+
+	}
+	private void Start(){
         StartCoroutine(FadeIn());
     }
 

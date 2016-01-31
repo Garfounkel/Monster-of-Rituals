@@ -52,8 +52,10 @@ public class PlayerAngry : MonoBehaviour {
 
 	public static void LessAngry()
 	{
+		ControlableBody.instance.OnNeedFilled();
 		if (currentMood != Mood.good)
 			currentMood--;
+		
 	}
 
     public static void Irritate(float irritatingness)
