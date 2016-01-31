@@ -5,7 +5,6 @@ public class Newspaper : InteractableNeed, IPickUpReact {
 
     public SpriteRenderer spriteRenderer;
     public float ReadingDistanceTreshold = 3;
-    public Transform Mouth;
     public Sprite RolledSprite;
     public Sprite OpenSprite;
 
@@ -14,18 +13,20 @@ public class Newspaper : InteractableNeed, IPickUpReact {
     private bool _isReading;
     private BoxCollider2D _box;
     private float _rolledSize;
+    private Transform _mouth;
 
     // Use this for initialization
     void Start ()
     {
         _box = GetComponent<BoxCollider2D>();
         _rolledSize = _box.size.y;
+        _mouth = GameObject.Find("Mouth").transform;
     }
 	
 	// Update is called once per frame
 	void Update ()
 	{
-	    if (Vector2.Distance(transform.position, Mouth.position) < ReadingDistanceTreshold)
+	    if (Vector2.Distance(transform.position, _mouth.position) < ReadingDistanceTreshold)
 	    {
 	        if (!_isReading)
 	        {
