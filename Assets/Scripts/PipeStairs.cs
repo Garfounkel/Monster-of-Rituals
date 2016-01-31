@@ -7,12 +7,20 @@ public class PipeStairs : MonoBehaviour
     public AudioClip pipeSound;
     public Transform exit;
     public float TargetZ;
-    
+    public ParticleSystem Particles;
+
+    void Start()
+    {
+        Particles.Stop();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         ControlableBody cb = other.GetComponent<ControlableBody>();
         if (cb != null)
         {
+            Particles.transform.position = cb.transform.position;
+            Particles.Play();
             StartCoroutine(Teleportation(cb));
         }
     }
@@ -27,12 +35,15 @@ public class PipeStairs : MonoBehaviour
         }
         */
 
-        cb.gameObject.SetActive(false);
+        //cb.gameObject.SetActive(false);
         // Play sound
         yield return new WaitForSeconds(0.5f);
-        cb.gameObject.SetActive(true);
+        //cb.gameObject.SetActive(true);
         //float y = cb.transform.position.y;
         float y = exit.position.y;
         cb.transform.position = new Vector2(exit.position.x, y);
+        Particles.transform.position = cb.transform.position;
+        yield return new WaitForSeconds(0.5f);
+        Particles.Stop();
     }
 }
