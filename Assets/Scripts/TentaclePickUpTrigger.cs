@@ -20,6 +20,7 @@ public class TentaclePickUpTrigger : MonoBehaviour {
 				if (pickUpReactor != null){
 					pickUpReactor.OnLetGo();
 				}
+				fixedJoint.connectedBody.velocity = Vector3.ClampMagnitude(fixedJoint.connectedBody.velocity, 19f);
 			}
 			fixedJoint.connectedBody = null;
 			fixedJoint.enabled = false;
