@@ -16,6 +16,8 @@ public class PlayerAngry : MonoBehaviour {
 
 	public static Mood currentMood;
 	private Mood previousMood;
+    private static float angryNuance;
+    public float coolingRate = 0.1f;
 
 	private ControlableBody cb;
 
@@ -26,7 +28,10 @@ public class PlayerAngry : MonoBehaviour {
 		UpdateMood ();
 	}
 	
-	void Update () {
+	void Update ()
+	{
+	    angryNuance = Mathf.Max(angryNuance - coolingRate * Time.deltaTime, 0); //Cooling down
+        //Debug.Log("Angry nuance " + angryNuance);
 		if (Input.GetKeyDown (KeyCode.B)) {
 			MoreAngry ();
 		}
@@ -50,6 +55,16 @@ public class PlayerAngry : MonoBehaviour {
 		if (currentMood != Mood.good)
 			currentMood--;
 	}
+
+    public static void Irritate(float irritatingness)
+    {
+        angryNuance += irritatingness;
+        if (angryNuance > 1)
+        {
+            MoreAngry();
+            angryNuance = 0;
+        }
+    }
 
 	public void UpdateMood ()
 	{

@@ -5,6 +5,7 @@ using System.Linq;
 public class monster_spawner_script : MonoBehaviour {
 
     public int MaximumMonsters = 5;
+    public bool SpawnRight = true;
 
     int _spawntimer = 0;
     Vector2 _spawnerposition;
@@ -34,6 +35,7 @@ public class monster_spawner_script : MonoBehaviour {
             GameObject _Monster = Instantiate(_monsterprefab);
             _Monster.name = "Monster";
             _Monster.transform.position = Random.insideUnitCircle * 2 + _spawnerposition;
+            _Monster.GetComponent<monster_script>()._movingRight = SpawnRight;
 
             _spawntimer = 0;
             //Debug.Log("Spawn nr " + GameObject.FindGameObjectsWithTag("Monster").Count());

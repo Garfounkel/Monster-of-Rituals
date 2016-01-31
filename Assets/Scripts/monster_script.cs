@@ -9,6 +9,7 @@ public class monster_script : MonoBehaviour {
     public float Acceleration = 5;
     public float MaxVelocity = 5;
     public float BounceForce = 5;
+    public float Irritatingness = 0.1f;
     private Rigidbody2D _localrigid;
     AudioSource _audio_hardhit;
 
@@ -20,8 +21,10 @@ public class monster_script : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update ()
+	{
+	    transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x)*(_movingRight ? 1 : -1),
+	        transform.localScale.y, transform.localScale.z);
 
         if (_moving)
         {
@@ -61,7 +64,8 @@ public class monster_script : MonoBehaviour {
 
         if (_coll.gameObject.tag == "Player")
         {
-            PlayerAngry.MoreAngry();
+            PlayerAngry.Irritate(Irritatingness * _localrigid.velocity.magnitude);
+            Debug.Log(Irritatingness + " * " + _localrigid.velocity.magnitude + " = " + (Irritatingness*_localrigid.velocity.magnitude));
             _localrigid.AddForce(new Vector2((_movingRight ? -1 : 1), 1) * BounceForce,ForceMode2D.Impulse);
         }
 
