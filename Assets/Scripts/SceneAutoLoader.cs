@@ -7,7 +7,6 @@ public class SceneAutoLoader : MonoBehaviour {
 	public static SceneAutoLoader instance;
 	public string[] otherScenes;
 	public GameObject effectBankPrefab;
-	public GameObject musicPrefab;
 
 	void Start(){
 		if (instance != null){
@@ -22,7 +21,6 @@ public class SceneAutoLoader : MonoBehaviour {
 				}
 			}
 			Instantiate(effectBankPrefab);
-			Instantiate(musicPrefab);
 		}
 	}
 }
