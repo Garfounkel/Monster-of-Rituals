@@ -63,7 +63,7 @@ public class Shower : MonoBehaviour
             }
         }
         //if (_player && _player.transform.position.x > transform.position.x-1) On = true;
-        if (_player && Mathf.Abs(_player.transform.position.x - _mount.position.x) < TriggerDistance)
+        if (_player && Mathf.Abs(_player.transform.position.x - _mount.position.x) < TriggerDistance && _player.transform.position.y > 4.5f)
             On = true;
         else
             On = false;
