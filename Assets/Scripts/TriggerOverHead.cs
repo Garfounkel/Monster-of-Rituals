@@ -4,8 +4,11 @@ using System.Collections;
 public class TriggerOverHead : MonoBehaviour {
 
 	public Sprite image;
+    public bool fliped;
 
 	private Sprite previousImage;
+
+
 
 	private void OnTriggerEnter2D(Collider2D other){
 
@@ -14,6 +17,10 @@ public class TriggerOverHead : MonoBehaviour {
 			SpriteRenderer rend = cb.OverHeadSprite;
 			previousImage = rend.sprite;
 			rend.sprite = image;
+		    if (fliped)
+		    {
+		        rend.flipX = true;
+		    }
 		}
 	}
 
