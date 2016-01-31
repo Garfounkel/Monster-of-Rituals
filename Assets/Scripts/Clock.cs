@@ -54,15 +54,30 @@ public class Clock : MonoBehaviour {
 		CurrentHour = 0;
 	}
 
+    private bool afternoon;
+    private int previousHour = -1;
+
 	void Update () 
 	{
 		clockNeedle.RotateAround (mid.position, Vector3.back, Time.deltaTime * speed);
-		CurrentHour =  12 - ((clockNeedle.eulerAngles.z / 30) % 12);
-		//Debug.Log ("hour = " + hours);
+	    previousHour = Mathf.FloorToInt(CurrentHour);
+
+        CurrentHour =  12 - ((clockNeedle.eulerAngles.z / 30) % 12);
+	    if ((previousHour == 11 || previousHour == 23) && Mathf.FloorToInt(CurrentHour) == 0)
+	    {
+	        afternoon = !afternoon;
+	    }
+
+        if (afternoon)
+	    {
+	        CurrentHour += 12;
+	    }
+
+        //Debug.Log ("hour = " + CurrentHour);
 
 
         // COFFEE
-	    if (CurrentHour > coffeeTime && !coffeeDrinked && !coffeeTimePassedOnlyOnce)
+        if (CurrentHour > coffeeTime && !coffeeDrinked && !coffeeTimePassedOnlyOnce)
 	    {
 	        coffeeTimePassedOnlyOnce = true;
             Debug.Log("Time for coffee has passed and I haven't even drinked one, I'm pissed !!");
