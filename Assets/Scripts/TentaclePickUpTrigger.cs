@@ -32,7 +32,7 @@ public class TentaclePickUpTrigger : MonoBehaviour {
 			fixedJoint.connectedBody = col.attachedRigidbody;
 			fixedJoint.connectedAnchor = Vector2.zero;
 			fixedJoint.enabled = true;
-			IPickUpReact pickUpReactor = col.gameObject.GetComponent<IPickUpReact>();
+			IPickUpReact pickUpReactor = col.attachedRigidbody.gameObject.GetComponent<IPickUpReact>();
 			if (pickUpReactor != null){
 				pickUpReactor.OnPickUp();
 			}
