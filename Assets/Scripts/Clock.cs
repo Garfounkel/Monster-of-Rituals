@@ -9,18 +9,17 @@ public class Clock : MonoBehaviour {
 
 	public float coffeeTime;
     public float showerTime;
-    public float lunchTime;
     public float whiskyTime;
+    public float newsPaperTime;
 
     public bool coffeeDrinked;
     public bool showerTook;
-    public bool lunchEaten;
     public bool whiskyDrinked;
     public bool newspaperRead;
 
     public Sprite coffeeClue;
     public Sprite showerClue;
-    public Sprite lunchClue;
+    public Sprite newsPaperClue;
     public Sprite whiskyClue;
 
     public float timeBeforeClue;
@@ -44,6 +43,9 @@ public class Clock : MonoBehaviour {
     private bool whiskyTimePassedOnlyOnce;
     private bool whiskyClueOnlyOnce;
     private bool whiskyTookInTimeOnlyOnce;
+    private bool newspaperTimePassedOnlyOnce;
+    private bool newspaperClueOnlyOnce;
+    private bool newspaperTookInTimeOnlyOnce;
 
     void Awake(){
         instance = this;
@@ -141,6 +143,27 @@ public class Clock : MonoBehaviour {
             Debug.Log("whisky has been taken before going to bed, I'm less angry =)");
             PlayerAngry.LessAngry();
         }
+
+        // NewsPaper
+        if (CurrentHour > newsPaperTime && !newspaperRead && !newspaperTimePassedOnlyOnce)
+        {
+            newspaperTimePassedOnlyOnce = true;
+            Debug.Log("Time for newspaper has passed and I haven't even took it, I'm pissed !!");
+            PlayerAngry.MoreAngry();
+        }
+
+        if (useClue && CurrentHour > newsPaperTime - timeBeforeClue && !newspaperRead && !newspaperClueOnlyOnce)
+        {
+            newspaperClueOnlyOnce = true;
+            StartCoroutine(SetOverHeadImage(newsPaperClue));
+        }
+
+        if (CurrentHour < newsPaperTime && newspaperRead && !newspaperTookInTimeOnlyOnce)
+        {
+            newspaperTookInTimeOnlyOnce = true;
+            Debug.Log("Newspaper has been read, I'm less angry =)");
+            PlayerAngry.LessAngry();
+        }
     }
 
 	public static void ReportNeedComplete(NeedType needType){
@@ -149,9 +172,6 @@ public class Clock : MonoBehaviour {
 		}
 		else if (needType == NeedType.Shower){
 			instance.showerTook = true;
-		}
-		else if (needType == NeedType.Lunch){
-			instance.lunchEaten = true;
 		}
         else if (needType == NeedType.Whisky)
         {
