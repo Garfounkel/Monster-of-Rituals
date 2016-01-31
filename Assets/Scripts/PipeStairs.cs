@@ -31,7 +31,8 @@ public class PipeStairs : MonoBehaviour
         // Play sound
         yield return new WaitForSeconds(0.5f);
         cb.gameObject.SetActive(true);
-        float y = cb.transform.position.y;
+        //float y = cb.transform.position.y;
+        float y = exit.position.y;
         cb.transform.position = new Vector2(exit.position.x, y);
     }
 }
