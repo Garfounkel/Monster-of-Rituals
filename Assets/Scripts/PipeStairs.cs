@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class PipeStairs : MonoBehaviour
 {
-    public AudioClip pipeSound;
     public Transform exit;
     public float TargetZ;
     public ParticleSystem Particles;
+    private AudioSource _sound;
 
     void Start()
     {
         Particles.Stop();
+        _sound = Particles.GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -43,6 +44,8 @@ public class PipeStairs : MonoBehaviour
         float y = exit.position.y;
         cb.transform.position = new Vector2(exit.position.x, y);
         Particles.transform.position = cb.transform.position;
+        _sound.Play();
+        _sound.time = 0.05f;
         yield return new WaitForSeconds(0.5f);
         Particles.Stop();
     }
