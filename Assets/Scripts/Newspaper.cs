@@ -9,12 +9,18 @@ public class Newspaper : InteractableNeed, IPickUpReact {
     public Sprite RolledSprite;
     public Sprite OpenSprite;
 
+
     private int originalSortingOrder = 0;
     private bool _isReading;
+    private BoxCollider2D _box;
+    private float _rolledSize;
 
     // Use this for initialization
-    void Start () {
-	}
+    void Start ()
+    {
+        _box = GetComponent<BoxCollider2D>();
+        _rolledSize = _box.size.y;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -41,17 +47,21 @@ public class Newspaper : InteractableNeed, IPickUpReact {
     {
         base.PerformNeed();
         spriteRenderer.sprite = OpenSprite;
+        _box.size = new Vector2(_box.size.x, _rolledSize * 2.5f);
+        
     }
 
     public override void StopPerformingNeed()
     {
         base.StopPerformingNeed();
         spriteRenderer.sprite = RolledSprite;
+        _box.size = new Vector2(_box.size.x, _rolledSize);
     }
 
     protected override void OnNeedComplete()
     {
         base.OnNeedComplete();
+        enabled = false;
         Debug.Log("Reading complete!");
     }
 

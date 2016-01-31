@@ -122,5 +122,6 @@ public enum NeedType
 {
     Coffee,
     Shower,
-    Lunch
+    Lunch,
+    Newspaper
 }
