@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: c076e65dd50cc3d4682bebe39e0719a5
-timeCreated: 1454239662
+timeCreated: 1454246609
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _monsterprefab: {fileID: 130368, guid: 6111d74d61f077f48b7ea42234c8495c, type: 2}
+  - player: {fileID: 193902, guid: 54d45a4378d70c344a92f7f8e514139a, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
