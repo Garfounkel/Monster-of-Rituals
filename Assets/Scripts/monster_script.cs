@@ -4,6 +4,7 @@ using System.Collections;
 
 public class monster_script : MonoBehaviour {
 
+    public GameObject DeathParticle;
     public bool _moving = true;
     public bool _movingRight = true;
     public float Acceleration = 5;
@@ -53,15 +54,20 @@ public class monster_script : MonoBehaviour {
     {
         //Debug.Log("CollisionEnter");
         if (_coll.gameObject.tag == "Tentacle")
-
-            _moving = false;
-
-        if (_coll.relativeVelocity.magnitude > 0.1)
         {
+            _moving = false;
+        }
+        if (_coll.relativeVelocity.magnitude > 7.1 && _coll.gameObject.tag == "Solid")
+        {
+
+            GameObject _Death = Instantiate(DeathParticle);
+            _Death.name = "Monster_Death_particle";
+            _Death.transform.position = transform.position;
+        Destroy(gameObject);
             //_audio_hardhit.Play();
             //Debug.Log("Magnitude");
         }
-
+    
         if (_coll.gameObject.tag == "Player")
         {
             PlayerAngry.Irritate(Irritatingness * _localrigid.velocity.magnitude);
