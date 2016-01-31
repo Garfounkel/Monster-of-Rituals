@@ -34,7 +34,6 @@ public class SkyController : MonoBehaviour {
 				endColor = nightColor;
 				lerpAmount = (Clock.CurrentHour-18f)/6f;
 			}
-			Debug.Log("LERP AMOUNT IS " + lerpAmount);
 			skyRenderer.color = Color.Lerp(startColor, endColor, lerpAmount); 
 //			Debug.Log("COLOR IS " + skyRenderer.color);
 		}

@@ -57,13 +57,13 @@ public class monster_script : MonoBehaviour {
         {
             _moving = false;
         }
-        if (_coll.relativeVelocity.magnitude > 7.1 && _coll.gameObject.tag == "Solid")
+        if (_coll.relativeVelocity.magnitude > 8.1)
         {
 
             GameObject _Death = Instantiate(DeathParticle);
             _Death.name = "Monster_Death_particle";
             _Death.transform.position = transform.position;
-        Destroy(gameObject);
+        	Destroy(gameObject);
             //_audio_hardhit.Play();
             //Debug.Log("Magnitude");
         }
