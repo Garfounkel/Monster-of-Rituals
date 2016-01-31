@@ -16,6 +16,7 @@ public class Clock : MonoBehaviour {
     public bool showerTook;
     public bool lunchEaten;
     public bool whiskyDrinked;
+    public bool newspaperRead;
 
     public Sprite coffeeClue;
     public Sprite showerClue;
@@ -57,7 +58,7 @@ public class Clock : MonoBehaviour {
     private bool afternoon;
     private int previousHour = -1;
 
-	void Update () 
+    void Update () 
 	{
 		clockNeedle.RotateAround (mid.position, Vector3.back, Time.deltaTime * speed);
 	    previousHour = Mathf.FloorToInt(CurrentHour);
@@ -124,7 +125,7 @@ public class Clock : MonoBehaviour {
         if (CurrentHour > whiskyTime && !whiskyDrinked && !whiskyTimePassedOnlyOnce)
         {
             whiskyTimePassedOnlyOnce = true;
-            Debug.Log("Time for whisky has passed and I haven't even took it, I'm pissed !!");
+            Debug.Log("Time for whisky has passed and I haven't even took it, I'm pissed !! it is " + CurrentHour);
             PlayerAngry.MoreAngry();
         }
 
@@ -152,9 +153,14 @@ public class Clock : MonoBehaviour {
 		else if (needType == NeedType.Lunch){
 			instance.lunchEaten = true;
 		}
-        else if (needType == NeedType.whisky)
+        else if (needType == NeedType.Whisky)
         {
+            Debug.Log("whisky drinked");
             instance.whiskyDrinked = true;
+        }
+        else if (needType == NeedType.Newspaper)
+        {
+            instance.newspaperRead = true;
         }
 	}
 
@@ -173,5 +179,5 @@ public enum NeedType
     Shower,
     Lunch,
     Newspaper,
-    whisky
+    Whisky
 }
