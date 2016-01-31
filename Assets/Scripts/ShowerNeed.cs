@@ -29,6 +29,10 @@ public class ShowerNeed : InteractableNeed
     // Update is called once per frame
     void Update()
     {
+        if (_mouth == null)
+        {
+            _mouth = FindObjectOfType<PlayerMouth>().transform;
+        }
         if (Vector2.Distance(transform.position, _mouth.position) < ReadingDistanceTreshold)
         {
             if (!_isReading)
