@@ -13,15 +13,11 @@ public class ShowerNeed : InteractableNeed
 
     private int originalSortingOrder = 0;
     private bool _isReading;
-    private BoxCollider2D _box;
-    private float _rolledSize;
     private Transform _mouth;
 
     // Use this for initialization
     void Start()
     {
-        _box = GetComponent<BoxCollider2D>();
-        _rolledSize = _box.size.y;
         //_mouth = GameObject.Find("Mouth").transform;
         _mouth = FindObjectOfType<PlayerMouth>().transform;
     }
