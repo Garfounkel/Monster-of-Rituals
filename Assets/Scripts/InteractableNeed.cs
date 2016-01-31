@@ -20,6 +20,7 @@ public class InteractableNeed : MonoBehaviour {
 
 	protected virtual void OnNeedComplete(){
 		isComplete = true;
+        Debug.Log("OnNeedComplete(); " + needType);
 		Clock.ReportNeedComplete(needType);
 	}
 
